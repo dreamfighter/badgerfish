@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build xmlns="http://badgerfish.googlecode.com/build/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://badgerfish.googlecode.com/build/ build.xsd ">
+	<transform stylesheet="target/dependency/docbook/slides/xhtml/plain.xsl">
+		<file>src/site/docbook/slides.xml</file>
+	</transform>
+</build>

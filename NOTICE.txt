@@ -1,0 +1,16 @@
+Copyright (C) 2012, 2013 dr. ir. Jeroen M. Valk
+
+This product includes/uses software developed by The Apache Software
+Foundation (http://www.apache.org/).
+
+This product includes/uses Rob Righter's node-xml with contributions from David Joham (https://github.com/robrighter/node-xml).
+
+This product includes/uses xml-maven-plugin (http://mojo.codehaus.org/xml-maven-plugin/).
+
+This product includes/uses the SAXON XSLT Processor from Michael Kay (http://saxon.sourceforge.net/).
+
+This product includes/uses docbook (http://www.docbook.org/).
+
+This product includes/uses NodeJS (http://nodejs.org/).
+
+This product includes/uses the Badgerfish convention (http://badgerfish.ning.com/).

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://badgerfish.googlecode.com/build/"
+	targetNamespace="http://badgerfish.googlecode.com/build/" elementFormDefault="qualified">
+	<complexType name="buildType">
+		<sequence>
+			<element name="transform">
+				<complexType>
+					<sequence>
+						<element name="file" type="string" maxOccurs="unbounded"
+							minOccurs="0"></element>
+					</sequence>
+					<attribute name="stylesheet" type="string"></attribute>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<element name="build" type="tns:buildType"></element>
+</schema>
