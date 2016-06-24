@@ -1,0 +1,110 @@
+<html>
+<head>
+ <script type="text/javascript">
+    function xml2bf(node) {
+        var json = {};
+        var cloneNS = function(ns) {
+            var nns = {};
+            for (var n in ns) {
+                if (ns.hasOwnProperty(n)) {
+                    nns[n] = ns[n];
+                }
+            }
+            return nns;
+        };
+        var process = function (node, obj, ns) {
+            //alert("node.nodeType=>"+node.nodeType);
+            
+            if (node.nodeType === 3) {
+                if (!node.nodeValue.match(/[\S]+/)) return;
+                if (obj["$"] instanceof Array) {
+                    obj["$"].push(node.nodeValue);
+                } else if (obj["$"] instanceof Object) {
+                    obj["$"] = [obj["$"], node.nodeValue];
+                } else {
+                    obj["$"] = node.nodeValue;
+                }
+            } else if (node.nodeType === 1) {
+                var p = {};
+                var nodeName = node.nodeName;
+                //alert("nodeName=>"+nodeName);
+                for (var i = 0; node.attributes && i < node.attributes.length; i++) {
+                    var attr = node.attributes[i];
+                    var name = attr.nodeName;
+                    var value = attr.nodeValue;
+                    
+                    
+                    if (name === "xmlns") {
+                        ns["$"] = value;
+                    } else if (name.indexOf("xmlns:") === 0) {
+                        ns[name.substr(name.indexOf(":") + 1)] = value;
+                    } else {
+                        
+                        p["@" + name] = value;
+                    }
+                }
+                
+                for (var prefix in ns) {
+                    //alert(nodeName+","+prefix);
+                    //document.getElementById("test2").innerHTML+=prefix;
+                    var localPrefix = nodeName.substr(0,nodeName.indexOf(":"));
+                    if (ns.hasOwnProperty(prefix) && localPrefix==prefix) {
+                        
+                        p["@xmlns"] = p["@xmlns"] || {};
+                        p["@xmlns"][prefix] = ns[prefix];
+                        delete ns[prefix];
+                    }
+                }
+                if (obj[nodeName] instanceof Array) {
+                    obj[nodeName].push(p);
+                } else if (obj[nodeName] instanceof Object) {
+                    obj[nodeName] = [obj[nodeName], p];
+                } else {
+                    obj[nodeName] = p;
+                }
+                for (var j = 0; j < node.childNodes.length; j++) {
+                    process(node.childNodes[j], p, cloneNS(ns));
+                }
+            } else if (node.nodeType === 9) {
+                for (var k = 0; k < node.childNodes.length; k++) {
+                    process(node.childNodes[k], obj, cloneNS(ns));
+                }
+            }
+        };
+        process(node, json, {});
+        return json;
+    }
+    function parseXML(xml) {
+        xml = xml.replace(/^[\s\n\r\t]*[<][\?][xml][^<^>]*[\?][>]/, "");
+        var doc;
+        if (window.ActiveXObject) {
+            doc = new ActiveXObject("Microsoft.XMLDOM");
+            doc.async = false;
+            doc.loadXML(xml);
+        } else
+            doc = (new DOMParser()).parseFromString(xml, "application/xml");
+        return doc;
+    }
+    
+    function convert(){
+        var xmlS = document.getElementById("xmlTextarea").value;
+        alert(xmlS);
+        var xml = parseXML(xmlS);
+    
+        document.getElementById("result").value= JSON.stringify(xml2bf(xml), null, '\t');
+    }
+
+ </script>
+ 
+</head>
+<body>
+
+<textarea id="xmlTextarea" rows="10" cols="100"></textarea>
+<br/>
+<input type="button" name="Convert" value="Convert" onclick="convert();"/>
+<br/>
+<br/>
+<textarea id="result" rows="10" cols="100"></textarea>
+
+</body>
+</html>
