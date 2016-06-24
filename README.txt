@@ -1,7 +1,5 @@
 Copyright (C) 2012, 2013 dr. ir. Jeroen M. Valk
 
-@modified by dreamfighter
-
 This file is part of Badgerfish CPX. Badgerfish CPX is free software: 
 you can redistribute it and/or modify it under the terms of the GNU Lesser 
 General Public License as published by the Free Software Foundation, either 
